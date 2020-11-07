@@ -1,0 +1,19 @@
+.header {
+    grid-area: h;
+    background-color: grey;
+  }
+
+  .avatar {
+    overflow: hidden;
+    max-width: 1200px;
+    height: 200px;
+    margin-top: 50px;
+  }
+  
+  .avatar img {
+    max-width: 800px;
+    margin-top: -200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
