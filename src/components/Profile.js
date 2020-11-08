@@ -3,7 +3,7 @@ import cssObject from './Profile.module.css'
 
 const Profile = () => {
     return (
-        <div className='content'>
+        <div className={cssObject.content}>
         <div>
           desc
         </div>
