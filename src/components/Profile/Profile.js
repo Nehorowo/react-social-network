@@ -1,24 +1,14 @@
 import React from 'react'
 import cssObject from './Profile.module.css'
+import MyPosts from './MyPosts/MyPosts'
 
 const Profile = () => {
     return (
         <div className={cssObject.content}>
         <div>
-          desc
+          Current status
         </div>
-        <div>
-          post
-          <div>
-            new post
-          </div>
-        </div>
-        <div>
-          post1
-        </div>
-        <div>
-          post2
-        </div>
+        <MyPosts/>
       </div>
     )
 }
