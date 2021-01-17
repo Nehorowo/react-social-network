@@ -1,13 +1,9 @@
 .app-wrapper {
   margin: 0 auto;
-  max-width: 100%;
-
   display: grid;
   grid-template-areas: 
   "h h"
   "n c";
-  /*grid-template-rows: 200px 1fr;*/
   grid-template-columns: 2fr 12fr;
-  /*grid-gap: 10px;*/
 }
 
