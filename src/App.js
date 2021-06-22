@@ -13,12 +13,13 @@ function App(props) {
         <Header />
         <Navbar />
         <Route path="/dialogs">
-          <Dialogs
-            state={props.state.messagesPage}
-          />
+          <Dialogs store={props.store} />
         </Route>
         <Route path="/profile">
-          <Profile profilePage={props.state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>
+          <Profile
+            profilePage={props.state.profilePage}
+            dispatch={props.dispatch}
+          />
         </Route>
       </BrowserRouter>
     </div>
