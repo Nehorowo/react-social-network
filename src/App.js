@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import { Route, BrowserRouter } from "react-router-dom";
 
 function App(props) {
@@ -13,13 +13,10 @@ function App(props) {
         <Header />
         <Navbar />
         <Route path="/dialogs">
-          <Dialogs store={props.store} />
+          <DialogsContainer store={props.store} />
         </Route>
         <Route path="/profile">
-          <Profile
-            profilePage={props.state.profilePage}
-            dispatch={props.dispatch}
-          />
+          <Profile store={props.store} />
         </Route>
       </BrowserRouter>
     </div>
