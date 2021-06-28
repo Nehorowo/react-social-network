@@ -13,10 +13,10 @@ function App(props) {
         <Header />
         <Navbar />
         <Route path="/dialogs">
-          <DialogsContainer store={props.store} />
+          <DialogsContainer />
         </Route>
         <Route path="/profile">
-          <Profile store={props.store} />
+          <Profile />
         </Route>
       </BrowserRouter>
     </div>
