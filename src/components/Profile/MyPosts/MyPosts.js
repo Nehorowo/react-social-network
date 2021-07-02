@@ -24,7 +24,7 @@ const MyPosts = (props) => {
         <div>
           <textarea
             ref={newPostElement}
-            defaultValue=""
+            value={props.newPostText}
             onChange={onPostChange}
           />
           <div>
