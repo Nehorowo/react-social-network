@@ -1,7 +1,8 @@
-import React from 'react'
-import cssObject from './Header.module.css'
+import React from "react";
+import cssObject from "./Header.module.css";
+import { NavLink } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header className={cssObject.header}>
       <div className={cssObject.avatar}>
@@ -10,8 +11,11 @@ const Header = () => {
           alt="mainImage"
         />
       </div>
+      <div className={cssObject.loginBlock}>
+        {props.isAuth ? props.login : <NavLink to={"/login"}>Login</NavLink>}
+      </div>
     </header>
   );
-}
+};
 
-export default Header
+export default Header;

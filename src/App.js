@@ -1,23 +1,24 @@
 import React from "react";
 import "./App.css";
-import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
 import UsersContainer from "./components/Users/UsersContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import { Route, BrowserRouter } from "react-router-dom";
+import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import store from "./redux/store";
 
-function App(props) {
+function App() {
   return (
     <div className="app-wrapper">
       <BrowserRouter>
-        <Header />
+        <HeaderContainer />
         <Navbar />
         <Route path="/dialogs">
           <DialogsContainer />
         </Route>
-        <Route path="/profile">
-          <Profile />
+        <Route path="/profile/:userId?">
+          <ProfileContainer />
         </Route>
         <Route path="/users">
           <UsersContainer />
@@ -26,5 +27,7 @@ function App(props) {
     </div>
   );
 }
+
+window.store = store;
 
 export default App;
