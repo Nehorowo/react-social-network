@@ -46,14 +46,16 @@ const Users = (props) => {
             <div>
               {u.followed ? (
                 <button
+                  disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
+                    props.toggleFollowing(true, u.id);
                     axios
                       .delete(
                         `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
                         {
                           withCredentials: true,
                           headers: {
-                            "API-KEY": "283a19c3-3ed8-4f01-8991-2fca6d626dc5",
+                            "API-KEY": "c6f0a1c3-1069-45f7-b09e-670688402f21",
                           },
                         }
                       )
@@ -61,6 +63,7 @@ const Users = (props) => {
                         if (response.data.resultCode === 0) {
                           props.unfollow(u.id);
                         }
+                        props.toggleFollowing(false, u.id);
                       });
                   }}
                 >
@@ -69,6 +72,7 @@ const Users = (props) => {
               ) : (
                 <button
                   onClick={() => {
+                    props.toggleFollowing(true, u.id);
                     axios
                       .post(
                         `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
@@ -76,7 +80,7 @@ const Users = (props) => {
                         {
                           withCredentials: true,
                           headers: {
-                            "API-KEY": "283a19c3-3ed8-4f01-8991-2fca6d626dc5",
+                            "API-KEY": "c6f0a1c3-1069-45f7-b09e-670688402f21",
                           },
                         }
                       )
@@ -84,6 +88,7 @@ const Users = (props) => {
                         if (response.data.resultCode === 0) {
                           props.follow(u.id);
                         }
+                        props.toggleFollowing(false, u.id);
                       });
                   }}
                 >
