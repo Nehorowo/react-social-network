@@ -1,3 +1,5 @@
+import { usersAPI } from "./../api/api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET-USERS";
@@ -63,11 +65,11 @@ const usersReducer = (state = initialState, action) => {
   }
 };
 
-export const follow = (userId) => ({
+export const followSuccess = (userId) => ({
   type: FOLLOW,
   userId,
 });
-export const unfollow = (userId) => ({
+export const unfollowSuccess = (userId) => ({
   type: UNFOLLOW,
   userId,
 });
@@ -90,5 +92,37 @@ export const toggleFollowing = (isFetching, userId) => ({
   isFetching,
   userId,
 });
+
+// Redux-thunk
+// Фактически то же самое, что и getUsersThinkCreator = (... , ...) => { return (dispatch) => { ... } }
+export const getUsers = (currentPage, pageSize) => (dispatch) => {
+  dispatch(toggleIsFetching(true));
+
+  usersAPI.getUsers(currentPage, pageSize).then((data) => {
+    dispatch(toggleIsFetching(false));
+    dispatch(setUsers(data.items));
+    dispatch(setTotalUsersCount(data.totalCount));
+  });
+};
+
+export const follow = (usersId) => (dispatch) => {
+  dispatch(toggleFollowing(true, usersId));
+  usersAPI.follow(usersId).then((response) => {
+    if (response.data.resultCode === 0) {
+      dispatch(followSuccess(usersId));
+    }
+    dispatch(toggleFollowing(false, usersId));
+  });
+};
+
+export const unfollow = (usersId) => (dispatch) => {
+  dispatch(toggleFollowing(true, usersId));
+  usersAPI.unfollow(usersId).then((response) => {
+    if (response.data.resultCode === 0) {
+      dispatch(unfollowSuccess(usersId));
+    }
+    dispatch(toggleFollowing(false, usersId));
+  });
+};
 
 export default usersReducer;

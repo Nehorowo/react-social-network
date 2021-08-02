@@ -7,6 +7,7 @@ import { Route, BrowserRouter } from "react-router-dom";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import store from "./redux/store";
+import LoginPage from "./components/Login/Login";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
         </Route>
         <Route path="/users">
           <UsersContainer />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
         </Route>
       </BrowserRouter>
     </div>
