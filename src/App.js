@@ -6,32 +6,42 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import { Route, BrowserRouter } from "react-router-dom";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import store from "./redux/store";
 import LoginPage from "./components/Login/Login";
+import { connect } from "react-redux";
+import { initializeApp } from "./redux/appReducer";
+import Preloader from "./components/common/Preloader/Preloader";
 
-function App() {
-  return (
-    <div className="app-wrapper">
-      <BrowserRouter>
-        <HeaderContainer />
-        <Navbar />
-        <Route path="/dialogs">
-          <DialogsContainer />
-        </Route>
-        <Route path="/profile/:userId?">
-          <ProfileContainer />
-        </Route>
-        <Route path="/users">
-          <UsersContainer />
-        </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-      </BrowserRouter>
-    </div>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializeApp();
+  }
+  render() {
+    if (!this.props.initialized) {
+      return <Preloader />;
+    }
+    return (
+      <div className='app-wrapper'>
+        <BrowserRouter>
+          <HeaderContainer />
+          <Navbar />
+          <Route path='/dialogs'>
+            <DialogsContainer />
+          </Route>
+          <Route path='/profile/:userId?'>
+            <ProfileContainer />
+          </Route>
+          <Route path='/users'>
+            <UsersContainer />
+          </Route>
+          <Route path='/login'>
+            <LoginPage />
+          </Route>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
-window.store = store;
+const mapStateToProps = (state) => ({ initialized: state.app.initialized });
 
-export default App;
+export default connect(mapStateToProps, { initializeApp })(App);
