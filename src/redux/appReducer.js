@@ -25,6 +25,7 @@ export const setInitSuccess = () => ({ type: SET_INIT_SUCCESS });
 
 export const initializeApp = () => async (dispatch) => {
   await dispatch(getAuthUserData());
+
   dispatch(setInitSuccess());
 };
 

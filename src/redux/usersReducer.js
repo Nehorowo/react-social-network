@@ -95,34 +95,31 @@ export const toggleFollowing = (isFetching, userId) => ({
 
 // Redux-thunk
 // Фактически то же самое, что и getUsersThinkCreator = (... , ...) => { return (dispatch) => { ... } }
-export const getUsers = (currentPage, pageSize) => (dispatch) => {
+export const getUsers = (currentPage, pageSize) => async (dispatch) => {
   dispatch(toggleIsFetching(true));
 
-  usersAPI.getUsers(currentPage, pageSize).then((data) => {
-    dispatch(toggleIsFetching(false));
-    dispatch(setUsers(data.items));
-    dispatch(setTotalUsersCount(data.totalCount));
-  });
+  let data = await usersAPI.getUsers(currentPage, pageSize);
+  dispatch(toggleIsFetching(false));
+  dispatch(setUsers(data.items));
+  dispatch(setTotalUsersCount(data.totalCount));
 };
 
-export const follow = (usersId) => (dispatch) => {
+//Follow-Unfollow
+const followUnfollowFlow = async (dispatch, usersId, apiMethod, actionCreator) => {
   dispatch(toggleFollowing(true, usersId));
-  usersAPI.follow(usersId).then((response) => {
-    if (response.data.resultCode === 0) {
-      dispatch(followSuccess(usersId));
-    }
-    dispatch(toggleFollowing(false, usersId));
-  });
+  let response = await apiMethod(usersId);
+  if (response.data.resultCode === 0) {
+    dispatch(actionCreator(usersId));
+  }
+  dispatch(toggleFollowing(false, usersId));
 };
 
-export const unfollow = (usersId) => (dispatch) => {
-  dispatch(toggleFollowing(true, usersId));
-  usersAPI.unfollow(usersId).then((response) => {
-    if (response.data.resultCode === 0) {
-      dispatch(unfollowSuccess(usersId));
-    }
-    dispatch(toggleFollowing(false, usersId));
-  });
+export const follow = (usersId) => async (dispatch) => {
+  followUnfollowFlow(dispatch, usersId, usersAPI.follow.bind(usersAPI), followSuccess);
+};
+
+export const unfollow = (usersId) => async (dispatch) => {
+  followUnfollowFlow(dispatch, usersId, usersAPI.unfollow.bind(usersAPI), unfollowSuccess);
 };
 
 export default usersReducer;
