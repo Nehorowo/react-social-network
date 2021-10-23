@@ -1,15 +1,17 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
-import UsersContainer from "./components/Users/UsersContainer";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import { Route, BrowserRouter } from "react-router-dom";
-import ProfileContainer from "./components/Profile/ProfileContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginPage from "./components/Login/Login";
 import { connect } from "react-redux";
 import { initializeApp } from "./redux/appReducer";
+import { HashRouter, Route, BrowserRouter } from "react-router-dom";
 import Preloader from "./components/common/Preloader/Preloader";
+import Navbar from "./components/Navbar/Navbar";
+import UsersContainer from "./components/Users/UsersContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import LoginPage from "./components/Login/Login";
+
+//lazy loading
+const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 
 class App extends React.Component {
   componentDidMount() {
@@ -21,22 +23,24 @@ class App extends React.Component {
     }
     return (
       <div className='app-wrapper'>
-        <BrowserRouter>
-          <HeaderContainer />
-          <Navbar />
-          <Route path='/dialogs'>
-            <DialogsContainer />
-          </Route>
-          <Route path='/profile/:userId?'>
-            <ProfileContainer />
-          </Route>
-          <Route path='/users'>
-            <UsersContainer />
-          </Route>
-          <Route path='/login'>
-            <LoginPage />
-          </Route>
-        </BrowserRouter>
+        <Suspense fallback={<Preloader />}>
+          <HashRouter>
+            <HeaderContainer />
+            <Navbar />
+            <Route path='/dialogs'>
+              <DialogsContainer />
+            </Route>
+            <Route path='/profile/:userId?'>
+              <ProfileContainer />
+            </Route>
+            <Route path='/users'>
+              <UsersContainer />
+            </Route>
+            <Route path='/login'>
+              <LoginPage />
+            </Route>
+          </HashRouter>
+        </Suspense>
       </div>
     );
   }
