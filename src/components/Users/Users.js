@@ -18,8 +18,7 @@ const Users = (props) => {
                 className={props.currentPage === p && styles.selectedPage}
                 onClick={(e) => {
                   props.onPageChanged(p);
-                }}
-              >
+                }}>
                 {p}
               </span>
             );
@@ -32,13 +31,9 @@ const Users = (props) => {
             <div>
               <NavLink to={"/profile/" + u.id}>
                 <img
-                  src={
-                    u.photos.small != null
-                      ? u.photos.small
-                      : "https://thispersondoesnotexist.com/image"
-                  }
+                  src={u.photos.small != null ? u.photos.small : "https://thispersondoesnotexist.com/image"}
                   className={styles.userPhoto}
-                  alt="userPhoto"
+                  alt='userPhoto'
                 />
               </NavLink>
             </div>
@@ -48,16 +43,14 @@ const Users = (props) => {
                   disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
                     props.unfollow(u.id);
-                  }}
-                >
+                  }}>
                   Unfollow
                 </button>
               ) : (
                 <button
                   onClick={() => {
                     props.follow(u.id);
-                  }}
-                >
+                  }}>
                   Follow
                 </button>
               )}
