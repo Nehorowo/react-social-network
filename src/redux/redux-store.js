@@ -1,4 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
+import { composeWithDevTools } from "remote-redux-devtools";
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 import sidebarReducer from "./sidebarReducer";
@@ -18,6 +19,14 @@ let reducers = combineReducers({
   form: formReducer,
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+const store = createStore(
+  reducers,
+  /* preloadedState, */ composeWithDevTools(
+    applyMiddleware(thunkMiddleware)
+    // other store enhancers if any
+  )
+);
+
+//let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export default store;
