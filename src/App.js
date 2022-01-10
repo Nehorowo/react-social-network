@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import UsersContainer from './components/Users/UsersContainer';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, HashRouter } from 'react-router-dom';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './components/Login/Login';
 import { connect } from 'react-redux';
@@ -23,7 +23,7 @@ class App extends React.Component {
     // }
     return (
       <div className="app-wrapper">
-        <BrowserRouter>
+        <HashRouter>
           <HeaderContainer />
           <Navbar />
           <Suspense fallback={<Preloader />}>
@@ -40,7 +40,7 @@ class App extends React.Component {
           <Route path="/login">
             <LoginPage />
           </Route>
-        </BrowserRouter>
+        </HashRouter>
       </div>
     );
   }
