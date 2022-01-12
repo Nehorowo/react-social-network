@@ -1,18 +1,19 @@
-import { usersAPI, profileAPI } from "./../api/api";
+import { usersAPI, profileAPI } from './../api/api';
 
-const ADD_POST = "ADD-POST";
-const DELETE_POST = "DELETE-POST";
-const SET_USER_PROFILE = "SET-USER-PROFILE";
-const SET_STATUS = "SET-STATUS";
+const ADD_POST = 'ADD-POST';
+const DELETE_POST = 'DELETE-POST';
+const SET_USER_PROFILE = 'SET-USER-PROFILE';
+const SET_STATUS = 'SET-STATUS';
+const SAVE_PHOTO_SUCCESS = 'SAVE-PHOTO-SUCCESS';
 
 let initialState = {
   posts: [
-    { id: "1", message: "salamakeikum", likesCount: 12 },
-    { id: "2", message: "$NOK is goos", likesCount: 11 },
-    { id: "3", message: "go to the moon", likesCount: 11 },
+    { id: '1', message: 'salamakeikum', likesCount: 12 },
+    { id: '2', message: '$NOK is goos', likesCount: 11 },
+    { id: '3', message: 'go to the moon', likesCount: 11 },
   ],
   profile: null,
-  status: "",
+  status: '',
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -27,7 +28,7 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: [...state.posts, newPost],
-        newPostText: "",
+        newPostText: '',
       };
     }
 
@@ -40,6 +41,10 @@ const profileReducer = (state = initialState, action) => {
     }
     case SET_STATUS: {
       return { ...state, status: action.status };
+    }
+
+    case SAVE_PHOTO_SUCCESS: {
+      return { ...state, profile: { ...state.profile, photos: action.photos } };
     }
 
     default:
@@ -61,6 +66,8 @@ export const setStatus = (status) => ({
   status,
 });
 
+export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos });
+
 export const getUserProfile = (userId) => async (dispatch) => {
   let response = await usersAPI.getUserProfile(userId);
   dispatch(setUserProfile(response.data));
@@ -75,6 +82,13 @@ export const updateStatus = (status) => async (dispatch) => {
   let response = await profileAPI.updateStatus(status);
   if (response.data.resultCode === 0) {
     dispatch(setStatus(status));
+  }
+};
+
+export const savePhoto = (file) => async (dispatch) => {
+  let response = await profileAPI.savePhoto(file);
+  if (response.data.resultCode === 0) {
+    dispatch(savePhotoSuccess(response.data.data.photos));
   }
 };
 
