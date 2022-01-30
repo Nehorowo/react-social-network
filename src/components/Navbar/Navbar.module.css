@@ -1,7 +1,9 @@
 .nav {
-    grid-area: n;
-    padding: 20px;
-  }
+  grid-area: n;
+  height: 100vh;
+  padding: 20px;
+  border-right: 1px solid #e5e5e5;
+}
 
 .navItem a {
   color: black;

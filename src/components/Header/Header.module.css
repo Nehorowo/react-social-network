@@ -3,20 +3,6 @@
   margin: 0 auto;
 }
 
-.avatar {
-  overflow: hidden;
-  height: 200px;
-  max-width: 800px;
-}
-
-.avatar img {
-  width: 100%;
-  margin-top: -200px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .loginBlock {
   float: right;
 }

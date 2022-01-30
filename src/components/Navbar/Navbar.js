@@ -1,10 +1,12 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import cssObject from "./Navbar.module.css";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import cssObject from './Navbar.module.css';
+import NavUserInfo from './NavUserInfo/NavUserInfo';
 
 const Navbar = () => {
   return (
     <nav className={cssObject.nav}>
+      <NavUserInfo />
       <div className={cssObject.navItem}>
         <NavLink to="/profile" activeClassName={cssObject.activeLink}>
           Profile
